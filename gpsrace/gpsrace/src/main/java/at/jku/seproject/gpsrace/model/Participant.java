@@ -21,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 @Entity
 @Table(name = "participant")
 
+//Hallo das ist ein Kommentar
+
 public class Participant {
 	@Id
 	@GeneratedValue
