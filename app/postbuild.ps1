@@ -1,0 +1,1 @@
+Copy-Item "./build/*" -Destination "../gpsrace/gpsrace/src/main/resources/static" -Recurse -force
