@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import {InputGroup, DropdownButton, Dropdown, FormControl, Button} from 'react-bootstrap';
+import {Redirect} from 'react-router-dom';
 
 
 class Home extends Component {
@@ -18,11 +19,6 @@ class Home extends Component {
     this.setState({races: body, isLoading: false, userName:"", passwort:""});
   }
 
-  onSubmit(e) {
-    e.preventDefault();
-    var title = this.title;
-    console.log(title);
-}
 
   render() {
     const {races, isLoading} = this.state;
@@ -46,12 +42,17 @@ class Home extends Component {
                   <option value={race.id}>{race.name}</option>
                   )}
               </select>
+              
               <FormControl aria-describedby="basic-addon1" placeholder="NickName" type="text" value={this.state.userName} onChange={evt => this.updateUserName(evt)}/>
               <FormControl aria-describedby="basic-addon1" placeholder="Passwort" type="text" value={this.state.passwort} onChange={evt => this.updatePassword(evt)}/>
             </InputGroup>
-            <Button  disabled={this.state.userName === "" || this.state.passwort === ""} href="#" size="lg">Login</Button>
-
-          </div>
+            <br></br>            
+            <Button  disabled={this.state.userName === "" || this.state.passwort === ""} href="/participant" size="lg" onClick={this.onSubmit}>Login as Player</Button>
+            <br></br>
+            <br></br>
+            
+          <Button   href="/viewer" size="lg">Login as Viewer</Button>
+          </div> 
         </header>
 
       </div>
