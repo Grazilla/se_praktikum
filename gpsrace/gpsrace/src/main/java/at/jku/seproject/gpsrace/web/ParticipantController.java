@@ -2,6 +2,9 @@ package at.jku.seproject.gpsrace.web;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.validation.Valid;
 
@@ -11,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import at.jku.seproject.gpsrace.model.Matchpoint;
 import at.jku.seproject.gpsrace.model.Participant;
@@ -19,6 +24,8 @@ import at.jku.seproject.gpsrace.model.Race;
 import at.jku.seproject.gpsrace.model.RaceParticipant;
 import at.jku.seproject.gpsrace.model.RaceRepository;
 
+@RestController
+@RequestMapping("/api")
 public class ParticipantController {
 
 	
@@ -32,7 +39,7 @@ public class ParticipantController {
 		this.raceRepository = raceRepository;
 	}
 	
-	@PostMapping("/race/{id}/login")
+	@PostMapping("/race/{rId}/login")
 	ResponseEntity<ParticipantModel> login(@PathVariable long rId, @Valid @RequestBody ParticipantModel participant) throws URISyntaxException {
 		Participant p = participantRepository.findByName(participant.getName());
 		
@@ -87,6 +94,7 @@ public class ParticipantController {
 			rp.setRace(race);
 			rp.setNextMatchpoint(mp);
 			
+			p.setParticipations(new HashSet<RaceParticipant>());
 			p.getParticipations().add(rp);
 			this.participantRepository.save(p);
 			

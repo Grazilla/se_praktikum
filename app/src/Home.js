@@ -10,8 +10,26 @@ class Home extends Component {
     races: [],
     userName: String,
     passwort: String,
-    selectedRace: Number,
+    selectedRaceId: Number,
   };
+
+  async handleSubmit() {
+    var payload = {
+      id: null,
+      name: this.state.userName
+    };
+    const response = await fetch('/api/race/' + this.state.selectedRaceId + '/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    console.log(response);
+
+  }
 
   async componentDidMount() {
     const response = await fetch('/api/race');
@@ -27,7 +45,7 @@ class Home extends Component {
       return <p>Loading...</p>;
     }
 
-    console.log(this.state.selectedRace);
+    console.log(this.state.selectedRaceId);
 
     return (
       
@@ -47,7 +65,7 @@ class Home extends Component {
               <FormControl aria-describedby="basic-addon1" placeholder="Passwort" type="text" value={this.state.passwort} onChange={evt => this.updatePassword(evt)}/>
             </InputGroup>
             <br></br>            
-            <Button  disabled={this.state.userName === "" || this.state.passwort === ""} href="/participant" size="lg" onClick={this.onSubmit}>Login as Player</Button>
+            <Button  disabled={this.state.userName === "" || this.state.passwort === ""} size="lg" onClick={evt => this.handleSubmit(evt)}>Login as Player</Button>
             <br></br>
             <br></br>
             
@@ -71,10 +89,17 @@ class Home extends Component {
   };
 
   updateSelectedRace(evt) {
+    console.log(evt);
     this.setState({
-      selectedRace: evt.target.value
+      selectedRaceId: evt.target.value
     });
   };
+
+
+
+  saveUser(){
+
+  }
 
 }
 
