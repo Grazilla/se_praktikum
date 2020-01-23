@@ -20,12 +20,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import at.jku.seproject.gpsrace.model.Matchpoint;
 import at.jku.seproject.gpsrace.model.MatchpointRepository;
 import at.jku.seproject.gpsrace.model.Race;
 
 
+@RestController
+@RequestMapping("/api")
 public class MatchpointController {
 
 	private final Logger log = LoggerFactory.getLogger(RaceController.class);
@@ -47,14 +51,14 @@ public class MatchpointController {
 		return matchpointRepository.findAll();
 	}
 	
-	@GetMapping("/matchpoint")
-	Matchpoint getMatchpoint(@PathVariable int rId, int oId) {
-		//return matchpointRepository.findByIds(rId, oId);
-		// collection = repo.getEntities
-		// sortedCollection = collection.sort
-		// return sortedCollection
-		return null;
-	}
+//	@GetMapping("/matchpoint")
+//	Matchpoint getMatchpoint(@PathVariable int rId, int oId) {
+//		//return matchpointRepository.findByIds(rId, oId);
+//		// collection = repo.getEntities
+//		// sortedCollection = collection.sort
+//		// return sortedCollection
+//		return null;
+//	}
 	
     @PostMapping("/matchpoint")
     ResponseEntity<Matchpoint> createRace(@Valid @RequestBody Matchpoint matchpoint) throws URISyntaxException {

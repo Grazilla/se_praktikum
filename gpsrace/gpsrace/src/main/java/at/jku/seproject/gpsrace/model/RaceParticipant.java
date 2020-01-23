@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "raceParticipant")
-
-
+@EqualsAndHashCode(exclude = "participant")
 public class RaceParticipant {
 	@Id
 	@GeneratedValue
@@ -41,7 +41,6 @@ public class RaceParticipant {
 	private Participant participant;
 	
 	@ManyToOne
-	@NonNull
 	private Matchpoint nextMatchpoint;
 	
 	private Timestamp time;

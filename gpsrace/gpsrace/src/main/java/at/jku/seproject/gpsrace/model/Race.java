@@ -1,6 +1,7 @@
 package at.jku.seproject.gpsrace.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "race")
+@EqualsAndHashCode
 public class Race {
 	@Id
 	@GeneratedValue

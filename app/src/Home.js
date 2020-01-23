@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import {InputGroup, DropdownButton, Dropdown, FormControl, Button} from 'react-bootstrap';
+import {Redirect} from 'react-router-dom';
 
 
 class Home extends Component {
@@ -9,8 +10,26 @@ class Home extends Component {
     races: [],
     userName: String,
     passwort: String,
-    selectedRace: Number,
+    selectedRaceId: Number,
   };
+
+  async handleSubmit() {
+    var payload = {
+      id: null,
+      name: this.state.userName
+    };
+    const response = await fetch('/api/race/' + this.state.selectedRaceId + '/login', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    console.log(response);
+
+  }
 
   async componentDidMount() {
     const response = await fetch('/api/race');
@@ -18,11 +37,6 @@ class Home extends Component {
     this.setState({races: body, isLoading: false, userName:"", passwort:""});
   }
 
-  onSubmit(e) {
-    e.preventDefault();
-    var title = this.title;
-    console.log(title);
-}
 
   render() {
     const {races, isLoading} = this.state;
@@ -31,7 +45,7 @@ class Home extends Component {
       return <p>Loading...</p>;
     }
 
-    console.log(this.state.selectedRace);
+    console.log(this.state.selectedRaceId);
 
     return (
       
@@ -46,12 +60,17 @@ class Home extends Component {
                   <option value={race.id}>{race.name}</option>
                   )}
               </select>
+              
               <FormControl aria-describedby="basic-addon1" placeholder="NickName" type="text" value={this.state.userName} onChange={evt => this.updateUserName(evt)}/>
               <FormControl aria-describedby="basic-addon1" placeholder="Passwort" type="text" value={this.state.passwort} onChange={evt => this.updatePassword(evt)}/>
             </InputGroup>
-            <Button  disabled={this.state.userName === "" || this.state.passwort === ""} href="#" size="lg">Login</Button>
-
-          </div>
+            <br></br>            
+            <Button  disabled={this.state.userName === "" || this.state.passwort === ""} size="lg" onClick={evt => this.handleSubmit(evt)}>Login as Player</Button>
+            <br></br>
+            <br></br>
+            
+          <Button   href="/viewer" size="lg">Login as Viewer</Button>
+          </div> 
         </header>
 
       </div>
@@ -70,10 +89,17 @@ class Home extends Component {
   };
 
   updateSelectedRace(evt) {
+    console.log(evt);
     this.setState({
-      selectedRace: evt.target.value
+      selectedRaceId: evt.target.value
     });
   };
+
+
+
+  saveUser(){
+
+  }
 
 }
 
