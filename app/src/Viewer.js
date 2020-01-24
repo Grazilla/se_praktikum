@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import { Button } from 'react-bootstrap';
-import { Map as LeafletMap, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Map as LeafletMap, TileLayer, Marker} from 'react-leaflet';
 import { featureGroup } from 'leaflet';
 
 
@@ -26,7 +26,7 @@ class Viewer extends Component {
   }
 
   render() {
-    const { races, isLoading } = this.state;
+    const {isLoading } = this.state;
 
 
     if (isLoading) {
