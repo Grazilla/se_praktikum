@@ -3,12 +3,6 @@
 }
 
 
-/*@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}*/
-
 .leaflet-container {
   height: 400px;
   width: 800px;
