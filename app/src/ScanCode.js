@@ -38,6 +38,7 @@ class ScanCode extends Component {
   handleError = err => {
     console.error(err)
   }
+  
   render() {
     return (
       <div style={{ alignContent:'center'}}>
