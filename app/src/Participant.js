@@ -61,7 +61,7 @@ class Participant extends Component {
   render() {
     const {race, isLoading} = this.state;
 
-    if(isLoading) {
+    if (isLoading) {
       return <p>Loading...</p>;
     }
 
