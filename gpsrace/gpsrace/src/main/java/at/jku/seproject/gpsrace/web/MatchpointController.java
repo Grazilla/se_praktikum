@@ -39,7 +39,7 @@ public class MatchpointController {
 		this.matchpointRepository = matchpointRepository;
 	}
 	
-	@GetMapping("/matchpoint")
+	@GetMapping("/matchpoint/{race}")
 	Collection<Matchpoint> getMachpointsForRace(@PathVariable Race race) {
 		//Collection<Matchpoint> matchpoints = matchpointRepository.findByRid(rId);
 		
@@ -52,7 +52,7 @@ public class MatchpointController {
 	}
 	
 //	@GetMapping("/matchpoint")
-//	Matchpoint getMatchpoint(@PathVariable int rId, int oId) {
+//	Matchpoint Matchpoint(@PathVariable int rId, int oId) {
 //		//return matchpointRepository.findByIds(rId, oId);
 //		// collection = repo.getEntities
 //		// sortedCollection = collection.sort

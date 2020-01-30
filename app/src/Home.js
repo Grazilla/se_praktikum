@@ -65,7 +65,7 @@ class Home extends Component {
               <FormControl aria-describedby="basic-addon1" placeholder="Passwort" type="text" value={this.state.passwort} onChange={evt => this.updatePassword(evt)}/>
             </InputGroup>
             <br></br>            
-            <Button  disabled={this.state.userName === "" || this.state.passwort === ""} size="lg" onClick={evt => this.handleSubmit(evt)}>Login as Player</Button>
+            <Button href="/participant" disabled={this.state.userName === "" || this.state.passwort === ""} size="lg" onClick={evt => this.handleSubmit(evt)}>Login as Player</Button>
             <br></br>
             <br></br>
             

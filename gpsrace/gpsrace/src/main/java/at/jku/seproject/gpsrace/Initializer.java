@@ -28,15 +28,18 @@ public class Initializer implements CommandLineRunner {
 		//create test data
 		//Stream.of("Race 000", "Race 02", "Race 03", "Race 04").forEach(name -> repository.save(new Race(name)));
 		
-		Race race1 = new Race("Race 01");
+		Race race1 = new Race("JKU Schnaps Race");
 		race1.setMatchpoints(new HashSet<Matchpoint>());
-		race1.getMatchpoints().add(new Matchpoint("Test Point 4", 4, 1.0, 1.0));
+		race1.getMatchpoints().add(new Matchpoint("GRATURLIEREEEE! Du hast den fünten Punkt erreicht! Gönn dir ein Schnapserl! "
+				+ "Auf gehts, ab gehts zum nächsten Spot, in Richtung Süden mega flott. Ein gelbes Kastl is the place to be... "
+				+ "so leicht war der Hinweis überhaupt noch nie.", 4, 1.0, 1.0));
 		race1.getMatchpoints().add(new Matchpoint("Test Point 3", 3, 0.1, 1.0));
 		race1.getMatchpoints().add(new Matchpoint("Test Point 2", 2, 1.2, 1.3));
+		race1.getMatchpoints().add(new Matchpoint("Test Point 2", 1, 1.2, 1.3));
 		race1.getMatchpoints().add(new Matchpoint("Test Point 0", 0, 0.7, 1.0));
 		repository.save(race1);
 		
-		Race race2 = new Race("Race 02");
+		Race race2 = new Race("Die Race gibt noch nicht");
 		race1.setMatchpoints(new HashSet<Matchpoint>());
 		race1.getMatchpoints().add(new Matchpoint("Test Point 4", 4, 1.0, 1.0));
 		race1.getMatchpoints().add(new Matchpoint("Test Point 3", 3, 0.1, 1.0));
