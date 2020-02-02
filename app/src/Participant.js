@@ -7,7 +7,9 @@ import jsQR from 'jsqr';
 class Participant extends React.Component {
   constructor(props) {
     super(props);
+    const { match: { params } } = this.props;
     this.state = {
+      raceId: params.raceId,
       showQr: false
     };
 
@@ -18,12 +20,31 @@ class Participant extends React.Component {
   }
 
   componentDidMount() {
-    if (navigator.geolocation) {
-      this.geoWatcher = navigator.geolocation.watchPosition((pos) => this.positionRegistered(pos), null, { enableHighAccuracy: true, maximumAge: 10000 });
-    }
-    else {
-      alert("Your browser does not support geolocation. Unfortunately you can't participate.");
-    }
+    let payload = {
+      id: this.context.userId,
+      name: this.context.username
+    };
+    console.log(payload);
+    fetch('/api/race/' + this.state.raceId + '/register', {
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(body => console.log('Registered user for race: ' + body.name));
+    setTimeout(() => {
+      if (navigator.geolocation) {
+        this.geoWatcher = navigator.geolocation.watchPosition((pos) => this.positionRegistered(pos), null, { enableHighAccuracy: true, maximumAge: 10000 });
+      }
+      else {
+        alert("Your browser does not support geolocation. Unfortunately you can't participate.");
+      }
+    }, 3000
+    );
+    
   }
 
   componentWillUnmount() {
@@ -37,6 +58,20 @@ class Participant extends React.Component {
   positionRegistered(pos) {
     //TODO update location on the backend
     console.log(pos);
+    let payload = {
+      latitude: pos.coords.latitude,
+      longitude: pos.coords.longitude
+    };
+    fetch('/api/race/' + this.state.raceId + '/updateCoords/' + this.context.userId, {
+      method: 'PUT',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(body => console.log('Updated coords'));
   }
 
   handleReadQrCode() {

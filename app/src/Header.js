@@ -59,7 +59,7 @@ class Header extends React.Component {
                             <Nav className="mr-auto">
                                 <Nav.Link as={Link} to="/" href="/">Home</Nav.Link>
                                 <Nav.Link as={Link} to="/viewer" href="/viewer">View Races</Nav.Link>
-                                {this.context.userId && (<Nav.Link as={Link} to="/participant" href="participant">Participate</Nav.Link>)}
+                                {this.context.userId && (<Nav.Link as={Link} to="/participation" href="participation">Participate</Nav.Link>)}
                             </Nav>
                             <Nav>
                                 {!user.userId ? (

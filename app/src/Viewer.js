@@ -19,17 +19,6 @@ class Viewer extends React.Component {
           });
           console.log(body);
         });
-    //TODO: fetch data from backend instead of doing this in code
-
-    // let participants = [];
-
-    // let mod = Math.random() / 10000;
-
-    // participants.push({ id: 1, username: 'ich', waypoints: 3, distance: Math.random(), latitude: 48.336812 + mod, longitude: 14.318426 + mod });
-    // participants.push({ id: 2, username: 'du', waypoints: 2, distance: Math.random(), latitude: 48.337526 + mod, longitude: 14.318641 + mod });
-    // participants.push({ id: 3, username: 'es', waypoints: 1, distance: Math.random(), latitude: 48.337363 + mod, longitude: 14.320697 + mod });
-
-    // this.setState ({ participants: participants });
   }
 
   componentDidMount() {
