@@ -16,8 +16,8 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-        username: 'Lukas',
-        userId: 1,
+        username: null,
+        userId: null,
         loginUser: (name, id) => this.setState({username: name, userId: id}),
         logoutUser: () => this.setState({username: null, userId: null})
     };

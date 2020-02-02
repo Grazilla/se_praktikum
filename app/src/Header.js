@@ -9,7 +9,8 @@ import { UserContext } from './UserContext';
 
 class Header extends React.Component {
     state = {
-        show: false
+        show: false,
+        username: ''
     }
 
     handleClose = () => {
@@ -21,9 +22,23 @@ class Header extends React.Component {
     }
 
     handleLogin = () => {
-        //TODO: call login routine on backend and decide which user to log in and if it succeeds
-        this.context.loginUser('Lukas', 1);
-        this.setState({ show: false});
+        let payload = {
+            id: null,
+            name: this.state.username
+        };
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(body => {
+            this.context.loginUser(body.name, body.id);
+            this.setState({ show: false});
+        });
     }
 
     handleLogout = () => {
@@ -44,7 +59,7 @@ class Header extends React.Component {
                             <Nav className="mr-auto">
                                 <Nav.Link as={Link} to="/" href="/">Home</Nav.Link>
                                 <Nav.Link as={Link} to="/viewer" href="/viewer">View Races</Nav.Link>
-                                {this.context.userId && (<Nav.Link as={Link} to="/participant" href="participant">Participant</Nav.Link>)}
+                                {this.context.userId && (<Nav.Link as={Link} to="/participant" href="participant">Participate</Nav.Link>)}
                             </Nav>
                             <Nav>
                                 {!user.userId ? (
@@ -63,17 +78,13 @@ class Header extends React.Component {
                             <Form>
                                 <Form.Group controlId="formUsername">
                                     <Form.Label>Username</Form.Label>
-                                    <Form.Control placeholder="Enter username"></Form.Control>
-                                </Form.Group>
-                                <Form.Group controlId="formPassword">
-                                    <Form.Label>Username</Form.Label>
-                                    <Form.Control type="password" placeholder="Enter password"></Form.Control>
+                                    <Form.Control placeholder="Enter username" type="text" value={this.state.username} onChange={evt => this.updateUserName(evt)}></Form.Control>
                                 </Form.Group>
                             </Form>
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={this.handleClose}>Cancel</Button>
-                            <Button variant="primary" onClick={this.handleLogin}>Login</Button>
+                            <Button disabled={this.state.username === ''} variant="primary" onClick={this.handleLogin}>Login</Button>
                         </Modal.Footer>
                     </Modal>
                     </>
@@ -82,7 +93,15 @@ class Header extends React.Component {
             </UserContext.Consumer>
         );
     }
+
+    updateUserName(evt) {
+        this.setState({
+            username: evt.target.value
+        });
+      };
 }
+
+
 
 Header.contextType = UserContext;
 

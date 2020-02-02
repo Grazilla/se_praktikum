@@ -39,8 +39,25 @@ public class ParticipantController {
 		this.raceRepository = raceRepository;
 	}
 	
-	@PostMapping("/race/{rId}/login")
-	ResponseEntity<ParticipantModel> login(@PathVariable long rId, @Valid @RequestBody ParticipantModel participant) throws URISyntaxException {
+	@PostMapping("/login")
+	ResponseEntity<ParticipantModel> login(@Valid @RequestBody ParticipantModel participant) throws URISyntaxException {
+		Participant p = participantRepository.findByName(participant.getName());
+		
+		if(p != null) {
+			ParticipantModel pm = new ParticipantModel(p.getId(), p.getName(), null);
+			return ResponseEntity.ok().body(pm);
+		}
+		else {
+			p = new Participant();
+			p.setName(participant.getName());
+			this.participantRepository.save(p);
+			ParticipantModel pm = new ParticipantModel(p.getId(), p.getName(), null);
+			return ResponseEntity.ok().body(pm);
+		}
+	}
+	
+	@PostMapping("/race/{rId}/register")
+	ResponseEntity<ParticipantModel> register(@PathVariable long rId, @Valid @RequestBody ParticipantModel participant) throws URISyntaxException {
 		Participant p = participantRepository.findByName(participant.getName());
 		
 		if(p != null) {
