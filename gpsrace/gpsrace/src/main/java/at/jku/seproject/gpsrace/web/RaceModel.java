@@ -14,6 +14,8 @@ public class RaceModel {
 
 	private Long id;
 	private String name;
+	private double mapLatitude;
+	private double mapLongitude;
 
 	private List<RaceParticipantModel> participants;
 	private List<MatchpointModel> matchpoints;

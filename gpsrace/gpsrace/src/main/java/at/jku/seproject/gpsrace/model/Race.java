@@ -26,10 +26,15 @@ public class Race {
 	@Column(unique=true)
 	private String name;
 	
+	private double mapLatitude;
+	private double mapLongitude;
+	
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@EqualsAndHashCode.Exclude 
 	private Set<RaceParticipant> participants;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+	@EqualsAndHashCode.Exclude 
 	private Set<Matchpoint> matchpoints;
 }
 

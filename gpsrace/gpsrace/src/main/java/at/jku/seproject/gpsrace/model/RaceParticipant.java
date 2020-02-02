@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "raceParticipant")
-@EqualsAndHashCode(exclude = "participant")
+@EqualsAndHashCode
 public class RaceParticipant {
 	@Id
 	@GeneratedValue
@@ -34,13 +34,16 @@ public class RaceParticipant {
 	
 	@ManyToOne
 	@NonNull
+	@EqualsAndHashCode.Exclude 
 	private Race race;
 	
 	@ManyToOne
 	@NonNull
+	@EqualsAndHashCode.Exclude 
 	private Participant participant;
 	
 	@ManyToOne
+	@EqualsAndHashCode.Exclude 
 	private Matchpoint nextMatchpoint;
 	
 	private Timestamp time;

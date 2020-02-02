@@ -31,6 +31,7 @@ public class Matchpoint {
 	private int oId;
 	
 	@ManyToOne
+	@EqualsAndHashCode.Exclude 
 	private Race race;
 	
 	@NonNull

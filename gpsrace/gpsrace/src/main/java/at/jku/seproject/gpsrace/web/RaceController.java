@@ -44,7 +44,7 @@ public class RaceController {
 		ArrayList<RaceModel> allRaces = new ArrayList<RaceModel>();
 		
 		for(Race r : races) {
-			RaceModel rm = new RaceModel(r.getId(),r.getName(),null,null);
+			RaceModel rm = new RaceModel(r.getId(),r.getName(), 0.0, 0.0,null,null);
 			allRaces.add(rm);			
 		}	
 		return allRaces;
@@ -55,20 +55,39 @@ public class RaceController {
 		log.info("Request to load race: {}", id);
         Optional<Race> race = raceRepository.findById(id);
         if(race.isPresent()) {
-        	RaceModel rm = new RaceModel(race.get().getId(), race.get().getName(), null, null);
+        	RaceModel rm = new RaceModel(race.get().getId(), race.get().getName(), race.get().getMapLatitude(), race.get().getMapLongitude(), null, null);
         	
             ArrayList<RaceParticipantModel> p = new ArrayList<RaceParticipantModel>();
             ArrayList<MatchpointModel> m = new ArrayList<MatchpointModel>();
             
             for(RaceParticipant rp : race.get().getParticipants()) {
             	Matchpoint mp = rp.getNextMatchpoint();
-            	MatchpointModel nextPoint = new MatchpointModel(mp.getId(), mp.getName(), mp.getOId(), null, mp.getLongitude(), mp.getLatitude());
+            	Participant part = rp.getParticipant();
+            	ParticipantModel partM = new ParticipantModel(part.getId(), part.getName(), null);
+            	MatchpointModel nextPoint = null;
             	
-            	RaceParticipantModel rpm = new RaceParticipantModel(rp.getId(), rp.getLongitude(), rp.getLatitude(), null, null, nextPoint, null);
+            	double distance = 0;
+            	if(mp != null) {
+	            	 nextPoint = new MatchpointModel(mp.getId(), mp.getName(), mp.getOId(), null, mp.getLongitude(), mp.getLatitude());
+	            	 distance = Math.round(calcDistance(rp.getLatitude(), rp.getLongitude() , nextPoint.getLatitude(), nextPoint.getLongitude()) * 1000);
+            	}
+            	RaceParticipantModel rpm = new RaceParticipantModel(rp.getId(), rp.getLongitude(), rp.getLatitude(), null, partM, nextPoint, distance, null);
+            	
             	p.add(rpm);
             }
             
-            //TODO: order participants by matchpoint order and distance to next Matchpoint
+            p.sort((RaceParticipantModel r1, RaceParticipantModel r2) -> {
+            	if(r1.getNextMatchpoint() == null && r2.getNextMatchpoint() == null) {
+            		//TODO compare timestamps;
+            		return 0;
+            	}
+            	if(r1.getNextMatchpoint() == null) return 1;
+            	if(r2.getNextMatchpoint() == null) return -1;
+            	int comp = new Integer(r1.getNextMatchpoint().getOId()).compareTo(new Integer(r2.getNextMatchpoint().getOId()));
+            	if(comp != 0) return comp;
+            	comp = new Double(r1.getDistance()).compareTo(new Double(r2.getDistance()));
+            	return comp;
+            });
             
             for(Matchpoint mp : race.get().getMatchpoints()) {
             	MatchpointModel model = new MatchpointModel(mp.getId(), mp.getName(), mp.getOId(), null, mp.getLongitude(), mp.getLatitude()); 
@@ -86,6 +105,28 @@ public class RaceController {
         	return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+	
+	private static double calcDistance(double lat1, double lon1, double lat2, double lon2) {
+		return calcDistance(lat1, lon1, lat2, lon2, "K");
+	}
+	private static double calcDistance(double lat1, double lon1, double lat2, double lon2, String unit) {
+		if ((lat1 == lat2) && (lon1 == lon2)) {
+			return 0;
+		}
+		else {
+			double theta = lon1 - lon2;
+			double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
+			dist = Math.acos(dist);
+			dist = Math.toDegrees(dist);
+			dist = dist * 60 * 1.1515;
+			if (unit.equals("K")) {
+				dist = dist * 1.609344;
+			} else if (unit.equals("N")) {
+				dist = dist * 0.8684;
+			}
+			return (dist);
+		}
+	}
 	
     /*@PostMapping("/race")
     ResponseEntity<Race> createRace(@Valid @RequestBody Race race) throws URISyntaxException {

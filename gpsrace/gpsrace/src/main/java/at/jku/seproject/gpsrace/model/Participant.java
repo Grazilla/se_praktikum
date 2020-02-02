@@ -32,6 +32,7 @@ public class Participant {
 	private String name;
 	
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany
+	@EqualsAndHashCode.Exclude 
 	private Set<RaceParticipant> participations;
 }

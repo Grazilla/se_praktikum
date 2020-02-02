@@ -27,6 +27,8 @@ public class RaceParticipantModel {
 	
 	private MatchpointModel nextMatchpoint;
 	
+	private double distance;
+	
 	private Timestamp time;
 	
 	

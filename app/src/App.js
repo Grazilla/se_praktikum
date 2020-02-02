@@ -1,27 +1,43 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Home from './Home';
-import Test from './Test';
+import ViewList from './ViewList';
 import Participant from './Participant';
 import Viewer from './Viewer';
-import ScanCode from './ScanCode';
+import { UserContext } from './UserContext';
+import Header from './Header';
 
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import './App.css';
 
 
-class App extends Component {
+
+class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        username: 'Lukas',
+        userId: 1,
+        loginUser: (name, id) => this.setState({username: name, userId: id}),
+        logoutUser: () => this.setState({username: null, userId: null})
+    };
+  }
+
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route path='/' exact={true} component={Home}/>
-          <Route path="/participant" exact={true} component={Participant}/>
-          <Route path="/viewer" exact={true} component={Viewer}/>
-          <Route path="/test" exact={true} component={Test}/>
-          <Route path="/scancode" exact={true} component={ScanCode}/>
-          
-        </Switch>
-      </Router>
+      <UserContext.Provider value={this.state}>
+        <Router>
+          <div>
+            <Header />
+            <Switch>
+              <Route path='/' exact={true} component={Home}/>
+              <Route path="/participant" exact={true} component={Participant}/>
+              <Route path="/viewer/:raceId" exact={true} component={Viewer}/>
+              <Route path="/viewer" exact={true} component={ViewList}/>
+            </Switch>
+          </div>
+        </Router>
+      </UserContext.Provider>
     )
   }
 }
