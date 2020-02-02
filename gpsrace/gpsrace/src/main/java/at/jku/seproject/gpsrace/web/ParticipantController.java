@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -52,13 +54,14 @@ public class ParticipantController {
 				participant = par;
 				break;
 			}
-			System.out.println(par.getId());
+			System.out.println(par.getParticipant().getId());
 		}
 		if(participant != null) {
+			System.out.println("Found par: " + participant.getId());
 			participant.setLatitude(coords.getLatitude());
 			participant.setLongitude(coords.getLongitude());
 			raceParticipantRepository.save(participant);
-			ResponseEntity.ok().body(coords);
+			return ResponseEntity.ok().body(coords);
 		}
 		return ResponseEntity.notFound().build();
 	}
@@ -83,9 +86,6 @@ public class ParticipantController {
 	@PostMapping("/race/{rId}/register")
 	ResponseEntity<ParticipantModel> register(@PathVariable long rId, @Valid @RequestBody ParticipantModel participant) throws URISyntaxException {
 		Participant p = participantRepository.findByName(participant.getName());
-		log.debug("Test");
-		log.debug(participant.getId().toString());
-		log.debug(participant.getName());
 		if(p != null) {
 			ParticipantModel pm = new ParticipantModel(p.getId(),p.getName(),null);
 
@@ -105,11 +105,12 @@ public class ParticipantController {
 					mp = m;
 			} 
 			
-			rp.setParticipant(p);
+			race.getParticipants().add(rp);
 			rp.setRace(race);
+			rp.setParticipant(p);
 			rp.setNextMatchpoint(mp);
 			
-			this.raceParticipantRepository.save(rp);			
+			this.raceRepository.save(race);
 			
 			return ResponseEntity.ok().body(pm);
 		}

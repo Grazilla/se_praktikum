@@ -84,7 +84,7 @@ public class RaceController {
             	if(r1.getNextMatchpoint() == null) return 1;
             	if(r2.getNextMatchpoint() == null) return -1;
             	int comp = new Integer(r1.getNextMatchpoint().getOId()).compareTo(new Integer(r2.getNextMatchpoint().getOId()));
-            	if(comp != 0) return comp;
+            	if(comp != 0) return -comp;
             	comp = new Double(r1.getDistance()).compareTo(new Double(r2.getDistance()));
             	return comp;
             });

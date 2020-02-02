@@ -34,17 +34,15 @@ class Participant extends React.Component {
       body: JSON.stringify(payload)
     })
     .then(response => response.json())
-    .then(body => console.log('Registered user for race: ' + body.name));
-    setTimeout(() => {
+    .then(body => {
+      console.log('Registered user for race: ' + body.name)
       if (navigator.geolocation) {
         this.geoWatcher = navigator.geolocation.watchPosition((pos) => this.positionRegistered(pos), null, { enableHighAccuracy: true, maximumAge: 10000 });
       }
       else {
         alert("Your browser does not support geolocation. Unfortunately you can't participate.");
       }
-    }, 3000
-    );
-    
+    });
   }
 
   componentWillUnmount() {
