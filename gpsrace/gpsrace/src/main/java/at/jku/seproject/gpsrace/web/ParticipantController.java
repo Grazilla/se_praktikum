@@ -83,6 +83,46 @@ public class ParticipantController {
 		}
 	}
 	
+	@PutMapping("race/{rId}/{pId}/matchPoint/{oId}")ResponseEntity<?> reached(@PathVariable long rId, @PathVariable long pId, @PathVariable long oId ){
+		Race r = this.raceRepository.findById(rId);
+		RaceParticipant participant = null;
+		
+		System.out.println("RaceId: " + rId + ", ParticipantId: " + pId);
+		for(RaceParticipant par : r.getParticipants()) {
+			if(par.getParticipant().getId() == pId) {
+				participant = par;
+				break;
+			}
+			System.out.println(par.getParticipant().getId());
+		}
+		if(participant != null) {
+			if(oId == participant.getNextMatchpoint().getOId()) {
+				Set<Matchpoint> mps = r.getMatchpoints();
+				Matchpoint mp;
+				for(Matchpoint m : mps) {
+					if(m.getOId() == oId+1) {
+						participant.setNextMatchpoint(m);
+						this.raceParticipantRepository.save(participant);
+						return ResponseEntity.ok().body(m);
+					}
+				}
+				this.raceParticipantRepository.save(null);
+				return ResponseEntity.ok().body(null);
+			}
+			else {
+				return ResponseEntity.notFound().build();
+			}
+			
+//			System.out.println("Found par: " + participant.getId());
+//			participant.setLatitude(coords.getLatitude());
+//			participant.setLongitude(coords.getLongitude());
+//			raceParticipantRepository.save(participant);
+//			return ResponseEntity.ok().body(coords);
+		}
+		
+		return ResponseEntity.notFound().build();
+	}
+	
 	@PostMapping("/race/{rId}/register")
 	ResponseEntity<ParticipantModel> register(@PathVariable long rId, @Valid @RequestBody ParticipantModel participant) throws URISyntaxException {
 		Participant p = participantRepository.findByName(participant.getName());

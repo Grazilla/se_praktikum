@@ -37,7 +37,7 @@ public class Initializer implements CommandLineRunner {
 		//create test data
 		//Stream.of("Race 000", "Race 02", "Race 03", "Race 04").forEach(name -> repository.save(new Race(name)));
 		
-		Participant part1 = new Participant("Luki");
+		/*Participant part1 = new Participant("Luki");
 		partRepository.save(part1);
 		Participant part2 = new Participant("Lisa");
 		partRepository.save(part2);
@@ -46,7 +46,7 @@ public class Initializer implements CommandLineRunner {
 		partRepository.save(part3);
 		
 		Participant part4 = new Participant("Sara");
-		partRepository.save(part4);
+		partRepository.save(part4);*/
 		
 		Race race1 = new Race("JKU Schnaps Race");
 		race1.setMapLatitude(48.3368654);
@@ -63,7 +63,7 @@ public class Initializer implements CommandLineRunner {
 		race1.getMatchpoints().add(new Matchpoint("Test Point 0", 4, 14.320562, 48.336636));
 		repository.save(race1);
 		
-		RaceParticipant racePart1 = new RaceParticipant(race1, part1);
+		/*RaceParticipant racePart1 = new RaceParticipant(race1, part1);
 		racePart1.setNextMatchpoint(start1);
 		racePart1.setLatitude(48.337526);
 		racePart1.setLongitude(14.318641);
@@ -88,7 +88,7 @@ public class Initializer implements CommandLineRunner {
 		race1.getParticipants().add(racePart3);
 		race1.getParticipants().add(racePart4);
 		
-		repository.save(race1);
+		repository.save(race1);*/
 		
 		Race race2 = new Race("Die Race gibt noch nicht");
 		race2.setMatchpoints(new HashSet<Matchpoint>());

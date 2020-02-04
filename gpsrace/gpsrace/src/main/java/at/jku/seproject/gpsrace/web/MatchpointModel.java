@@ -13,7 +13,7 @@ public class MatchpointModel {
 	private String name;
 	
 	private int oId;
-	private RaceModel race;
+	private Race race;
 	
 	private double longitude;	
 	private double latitude;
