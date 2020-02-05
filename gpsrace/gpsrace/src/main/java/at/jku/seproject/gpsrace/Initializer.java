@@ -80,7 +80,7 @@ public class Initializer implements CommandLineRunner {
 					
 		repository.save(race1);	
 		
-		Race race2 = new Race("Die Race gibt noch nicht");
+		Race race2 = new Race("This race currently doesn't exist");
 		race2.setMatchpoints(new HashSet<Matchpoint>());
 		race2.setMapLatitude(48.3368654);
 		race2.setMapLongitude(14.3196514);
