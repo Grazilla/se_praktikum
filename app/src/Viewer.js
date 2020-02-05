@@ -62,7 +62,7 @@ class Viewer extends React.Component {
                     <div className="col-md-1">
                       {
                         this.state.participants.map((value, index) => {
-                          return <div key={'card' + value.id}>{index + 1}.
+                          return <div key={'card' + value.id}>{index + 1}
                             <div className="col-md-4">
                               <img src="https://steamuserimages-a.akamaihd.net/ugc/885378750233363168/CFA6808BAC06EC8983BE6D9E13D2D8790FAD3307/" width="100" height="100" alt="Yoshi"></img>
                             </div>
@@ -76,12 +76,9 @@ class Viewer extends React.Component {
                                       </Accordion.Toggle>
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="0">
-                                      <Card.Body>
-
-                                        {!value.matchpoint && (<span>Reached the End!</span>)}
-                                        {value.matchpoint && (<span>                                        
-                                          Next matchpoint: {value.nextMatchpoint.oid},
-                                          Distance: {value.distance}m</span>)}
+                                      <Card.Body>                                  
+                                        Next matchpoint: {value.nextMatchpoint.oid},
+                                        Distance: {value.distance}m,
                                       </Card.Body>
                                     </Accordion.Collapse>
                                   </Card>
