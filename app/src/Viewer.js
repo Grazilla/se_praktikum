@@ -77,7 +77,8 @@ class Viewer extends React.Component {
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="0">
                                       <Card.Body>
-                                        Next matchpoint: {value.nextMatchpoint.oid}, Distance: {value.distance}m
+                                        Next matchpoint: {value.nextMatchpoint.oid},
+                                        Distance: {value.distance}m
                                       </Card.Body>
                                     </Accordion.Collapse>
                                   </Card>
@@ -97,7 +98,7 @@ class Viewer extends React.Component {
               <div className="card-body">
                 <h5 className="card-title">Map View</h5>
                 <div className="leaflet-container">
-                  <Map center={this.state.mapPosition} zoom={17}>
+                  <Map center={this.state.mapPosition} zoom={15}>
                     <TileLayer
                       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                       attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"

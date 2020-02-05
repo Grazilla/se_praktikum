@@ -19,7 +19,7 @@ function Home() {
             <li>Sandra Pühringer</li>
             <li>Sara Scheucher</li>
             <p></p>
-            <img src={Rois} alt="bild" />
+            <img src={Rois} width="200" height="200" alt="bild" />
           </ul>
         </div>
         <div className="col">&nbsp;</div>

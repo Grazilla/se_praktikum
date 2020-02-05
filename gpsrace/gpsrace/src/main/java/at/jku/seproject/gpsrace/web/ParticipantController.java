@@ -83,7 +83,7 @@ public class ParticipantController {
 		}
 	}
 	
-	@PutMapping("race/{rId}/{pId}/matchPoint/{oId}")ResponseEntity<?> reached(@PathVariable long rId, @PathVariable long pId, @PathVariable long oId ){
+	@PutMapping("race/{rId}/{pId}/matchPoint/{oId}")ResponseEntity<?> reached(@PathVariable long rId, @PathVariable long pId, @PathVariable long oId) throws URISyntaxException{
 		Race r = this.raceRepository.findById(rId);
 		RaceParticipant participant = null;
 		
