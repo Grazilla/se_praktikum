@@ -77,8 +77,11 @@ class Viewer extends React.Component {
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="0">
                                       <Card.Body>
-                                        Next matchpoint: {value.nextMatchpoint.oid},
-                                        Distance: {value.distance}m
+
+                                        {!value.matchpoint && (<span>Reached the End!</span>)}
+                                        {value.matchpoint && (<span>                                        
+                                          Next matchpoint: {value.nextMatchpoint.oid},
+                                          Distance: {value.distance}m</span>)}
                                       </Card.Body>
                                     </Accordion.Collapse>
                                   </Card>
