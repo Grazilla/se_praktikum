@@ -104,7 +104,7 @@ class Viewer extends React.Component {
                       attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
                     />
                     {this.state.participants.map((value, index) => {
-                      return <Marker key={'marker' + value.id} position={[value.latitude, value.longitude]}><Popup>{value.username}</Popup></Marker>
+                      return <Marker key={'marker' + value.id} position={[value.latitude, value.longitude]}><Popup>{value.participant.name}</Popup></Marker>
                     })}
                     <Polyline color="lime" positions={this.state.route} />
                     {this.state.route.map((value, index) => {
